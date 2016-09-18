@@ -1,0 +1,3 @@
+﻿  replace.cpp
+c:\users\toshiba\documents\visual studio 2015\projects\lw1\replace\replace.cpp(72): error C2664: "bool isStringReplaced(std::ifstream,std::ofstream,std::string,std::string)": невозможно преобразовать аргумент 1 из "std::ifstream *" в "std::ifstream"
+  c:\users\toshiba\documents\visual studio 2015\projects\lw1\replace\replace.cpp(72): note: Ни один конструктор не смог принять исходный тип, либо разрешение перегрузки конструктора неоднозначно
