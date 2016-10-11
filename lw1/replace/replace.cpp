@@ -19,7 +19,6 @@ int main(int argc, char * argv[])
 
 	ifstream input(argv[1]);
 	ofstream output(argv[2]);
-
 	if (!AreFilesOpened(input, output, argv[1], argv[2]))
 		return 1;
 
@@ -29,15 +28,15 @@ int main(int argc, char * argv[])
 		cout << "Search string shouldn't be empty\n";
 		return 1;
 	}
-	else
-		if (!IsSearchStringReplaced(input, output, searchString, replaceString))
-			cout << "Search string '" << searchString << "' hasn't been found.\n";
+	if (!IsSearchStringReplaced(input, output, searchString, replaceString))
+		cout << "Search string '" << searchString << "' hasn't been found.\n";
 
 	if (!output.flush())
 	{
 		cout << "Failed to save data on disk\n";
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -76,9 +75,7 @@ bool IsSearchStringReplaced(ifstream &input, ofstream &output, string search, st
 	string fileLine;
 	bool isSearchStringFound = false;
 	while (getline(input, fileLine))
-	{
 		if (fileLine != Replace(fileLine, search, replace, output))
 			isSearchStringFound = true;
-	}
 	return isSearchStringFound;
 }
