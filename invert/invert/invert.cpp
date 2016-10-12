@@ -15,7 +15,7 @@ void ReadMatrixFromFile(ifstream &input, Matrix &matrix);
 float CalculateDeterminantOfMatrix(Matrix const &matrix);
 float FindDeterminantOfMinor(float a11, float a12, float a21, float a22);
 float FindMinor(Matrix const &matrixOfMinors, const int row, const int col);
-void CalculateMatrixOfMinors(const Matrix &matrix, Matrix &matrixOfMinors);
+void CalculateMatrixOfAlgebraicAdditions(const Matrix &matrix, Matrix &matrixOfMinors);
 void InvertMatrix(const Matrix &matrixOfMinors, Matrix &inverseMatrix, const float determinant);
 void PrintInverseMatrix(const Matrix &inverseMatrix);
 
@@ -34,7 +34,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	Matrix matrix, matrixOfMinors, inverseMatrix;
+	Matrix matrix, MatrixOfAlgebraicAdditions, inverseMatrix;
 	ReadMatrixFromFile(input, matrix);
 
 	float determinant = CalculateDeterminantOfMatrix(matrix);
@@ -44,8 +44,8 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	CalculateMatrixOfMinors(matrix, matrixOfMinors);
-	InvertMatrix(matrixOfMinors, inverseMatrix, determinant);
+	CalculateMatrixOfAlgebraicAdditions(matrix, MatrixOfAlgebraicAdditions);
+	InvertMatrix(MatrixOfAlgebraicAdditions, inverseMatrix, determinant);
 	PrintInverseMatrix(inverseMatrix);
     return 0;
 }
@@ -93,18 +93,18 @@ float FindMinor(Matrix const &matrix, const int row, const int col)
 	return FindDeterminantOfMinor(minor[0], minor[1], minor[2], minor[3]);
 }
 
-void CalculateMatrixOfMinors(const Matrix &matrix, Matrix &matrixOfMinors)
+void CalculateMatrixOfAlgebraicAdditions(const Matrix &matrix, Matrix &MatrixOfAlgebraicAdditions)
 {
 	for (int i = 0; i < ROWS; ++i)
 		for (int j = 0; j < COLS; ++j)
-			matrixOfMinors[j][i] = ((i + j) % 2 != 0 ? FindMinor(matrix, i, j) * (-1) : FindMinor(matrix, i, j));
+			MatrixOfAlgebraicAdditions[j][i] = ((i + j) % 2 != 0 ? FindMinor(matrix, i, j) * (-1) : FindMinor(matrix, i, j));
 }
 
-void InvertMatrix(const Matrix &matrixOfMinors, Matrix &inverseMatrix, const float determinant)
+void InvertMatrix(const Matrix &MatrixOfAlgebraicAdditions, Matrix &inverseMatrix, const float determinant)
 {
 	for (int i = 0; i < ROWS; ++i)
 		for (int j = 0; j < COLS; ++j)
-			inverseMatrix[i][j] = (1 / determinant) * matrixOfMinors[i][j];
+			inverseMatrix[i][j] = (1 / determinant) * MatrixOfAlgebraicAdditions[i][j];
 }
 
 void PrintInverseMatrix(const Matrix &inverseMatrix)
