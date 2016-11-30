@@ -82,9 +82,8 @@ const CRational operator+(const CRational & lRational, const CRational & rRation
 //////////////////////////////////////////////////////////////////////////
 const CRational operator-(const CRational & lRational, const CRational & rRational)
 {
-	int resultNumerator = lRational.GetNumerator() * rRational.GetDenominator() - rRational.GetNumerator() * lRational.GetDenominator();
-	int resultDenominator = lRational.GetDenominator() * rRational.GetDenominator();
-	return CRational(resultNumerator, resultDenominator);
+#pragma message("use +")
+	return lRational + (-rRational);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -92,9 +91,7 @@ const CRational operator-(const CRational & lRational, const CRational & rRation
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator+=(const CRational & rRational)
 {
-	m_numerator = m_numerator * rRational.GetDenominator() + rRational.GetNumerator() * m_denominator;
-	m_denominator = m_denominator * rRational.GetDenominator();
-	Normalize();
+	*this = *this + rRational;
 	return *this;
 }
 
@@ -103,9 +100,8 @@ const CRational & CRational::operator+=(const CRational & rRational)
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator-=(const CRational & rRational)
 {
-	m_numerator = m_numerator * rRational.GetDenominator() - rRational.GetNumerator() * m_denominator;
-	m_denominator = m_denominator * rRational.GetDenominator();
-	Normalize();
+#pragma message("use +=")
+	*this = *this + CRational(-rRational.GetNumerator(), rRational.GetDenominator());
 	return *this;
 }
 
@@ -124,43 +120,34 @@ const CRational operator*(const CRational & lRational, const CRational & rRation
 //////////////////////////////////////////////////////////////////////////
 const CRational operator/(const CRational & lRational, const CRational & rRational)
 {
+#pragma message("use *")
 	if (rRational.GetNumerator() == 0)
 	{
 		throw std::invalid_argument("Denominator must not be equal to zero");
 	}
-	int resultNumerator = lRational.GetNumerator() * rRational.GetDenominator();
-	int resultDenominator = lRational.GetDenominator() *  rRational.GetNumerator();
-	return CRational(resultNumerator, resultDenominator);
+	return lRational * CRational(rRational.GetDenominator(), rRational.GetNumerator());
 }
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
-const CRational CRational::operator*=(const CRational & rRational)
+const CRational & CRational::operator*=(const CRational & rRational)
 {
-	m_numerator = m_numerator * rRational.GetNumerator();
-	m_denominator = m_denominator * rRational.GetDenominator();
-	Normalize();
+	*this = *this * rRational;
 	return *this;
 }
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
 //////////////////////////////////////////////////////////////////////////
-const CRational CRational::operator/=(const CRational & rRational)
+const CRational & CRational::operator/=(const CRational & rRational)
 {
+#pragma message("use *=")
 	if (rRational.GetNumerator() == 0)
 	{
 		throw std::invalid_argument("Denominator must not be equal to zero");
 	}
-	m_numerator = m_numerator * rRational.GetDenominator();
-	m_denominator = m_denominator * rRational.GetNumerator();
-	if (m_denominator < 0)
-	{
-		m_numerator = -m_numerator;
-		m_denominator = -m_denominator;
-	}
-	Normalize();
+	*this = *this * CRational(rRational.GetDenominator(), rRational.GetNumerator());
 	return *this;
 }
 
@@ -174,7 +161,8 @@ const bool operator==(const CRational & lRational, const CRational & rRational)
 
 const bool operator!=(const CRational & lRational, const CRational & rRational)
 {
-	return !((lRational.GetNumerator() == rRational.GetNumerator()) && (lRational.GetDenominator() == rRational.GetDenominator()));
+#pragma message("use ==")
+	return !(lRational == rRational);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -192,12 +180,14 @@ const bool operator>(const CRational & lRational, const CRational & rRational)
 
 const bool operator<=(const CRational & lRational, const CRational & rRational)
 {
-	return !((lRational.GetNumerator() * rRational.GetDenominator()) > (rRational.GetNumerator() * lRational.GetDenominator()));
+#pragma message("use >")
+	return !(lRational > rRational);
 }
 
 const bool operator>=(const CRational & lRational, const CRational & rRational)
 {
-	return !((lRational.GetNumerator() * rRational.GetDenominator()) < (rRational.GetNumerator() * lRational.GetDenominator()));
+#pragma message("use <")
+	return !(lRational < rRational);
 }
 
 //////////////////////////////////////////////////////////////////////////
