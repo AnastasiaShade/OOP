@@ -112,12 +112,6 @@ BOOST_FIXTURE_TEST_SUITE(if_engine_is_turned_on, when_turned_on_)
 				BOOST_CHECK(car.SetGear(1));
 			}
 
-			BOOST_AUTO_TEST_CASE(cant_set_gear_out_of_range)
-			{
-				BOOST_CHECK(!car.SetGear(6));
-				BOOST_CHECK(!car.SetGear(-2));
-			}
-
 			BOOST_AUTO_TEST_CASE(cant_set_gear_without_required_speed)
 			{
 				BOOST_CHECK(!car.SetGear(2));
@@ -130,7 +124,7 @@ BOOST_FIXTURE_TEST_SUITE(if_engine_is_turned_on, when_turned_on_)
 				BOOST_CHECK(car.SetGear(-1));
 			}
 
-			BOOST_AUTO_TEST_CASE(cant_set_rear_gear_from_other_gears_or_non_ozer_speeds)
+			BOOST_AUTO_TEST_CASE(cant_set_rear_gear_from_other_gears_or_non_zero_speeds)
 			{
 				car.SetGear(1);
 				car.SetSpeed(30);

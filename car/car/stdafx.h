@@ -10,6 +10,10 @@
 #include <stdio.h>
 #include <tchar.h>
 
-
+#include <iostream>
+#include <map>
+#include <functional>
+#include <sstream>
+#include <string>
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы

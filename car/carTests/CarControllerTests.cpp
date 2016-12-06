@@ -37,9 +37,14 @@ struct CarControllerFixture : CCarControllerDependencies
 
 BOOST_FIXTURE_TEST_SUITE(Car_controller, CarControllerFixture)
 
+BOOST_AUTO_TEST_CASE(cant_handle_EngineOff_command)
+{
+	VerifyCommandHandling("EngineOff", "Speed is non 0 and gear is non neutral or engine is already off\n");
+}
+
 BOOST_AUTO_TEST_CASE(can_handle_EngineOn_command)
 {
-	VerifyCommandHandling("EngineOn", "");
+	VerifyCommandHandling("EngineOn", "Engine is turned on\n");
 }
 
 BOOST_AUTO_TEST_CASE(can_handle_Info_command)
@@ -49,7 +54,7 @@ BOOST_AUTO_TEST_CASE(can_handle_Info_command)
 
 BOOST_AUTO_TEST_CASE(can_print_errors_message)
 {
-	VerifyCommandHandling("SetGear 1", "Engine is turned off or gear does not match current speed\n");
+	VerifyCommandHandling("SetGear 1", "Gear is out of range for current gear or engine is turned off\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

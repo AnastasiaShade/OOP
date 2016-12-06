@@ -1,9 +1,5 @@
 #pragma once
 #include <string>
-#include <map>
-#include <iterator>
-
-using namespace std;
 
 enum struct Gear
 {
@@ -24,9 +20,9 @@ enum struct Direction
 	FORWARD
 };
 
-using Speed = pair<int, int>;
+using Speed = std::pair<int, int>;
 
-static const map<Gear, Speed> SpeedRange = {
+static const std::map<Gear, Speed> SpeedRange = {
 	{ Gear::REAR, Speed(0, 20) },
 	{ Gear::NEUTRAL, Speed(0, 150) },
 	{ Gear::FIRST, Speed(0, 30) },
@@ -41,7 +37,7 @@ class CCar
 public:
 	CCar();
 	~CCar() = default;
-	string Info()const;
+	std::string Info()const;
 	bool TurnOnEngine();
 	bool TurnOffEngine();
 	bool SetGear(int gear);
@@ -49,11 +45,11 @@ public:
 	bool IsEngineOn()const;
 	int GetCurrentSpeed()const;
 	int GetCurrentGear()const;
-	string GetCurrentDirection()const;
+	std::string GetCurrentDirection()const;
 
 private:
 	bool IsValidGear(int gear)const;
-	bool CCar::IsValidSpeed(const Gear &gear, const int &speed)const;
+	bool IsValidSpeed(const Gear &gear, const int &speed)const;
 	bool ChangeGear(int gear);
 	bool m_isTurnOn;
 	Gear m_currentGear;

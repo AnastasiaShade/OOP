@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include <iostream>
 #include "Car.h"
 #include "CarController.h"
 

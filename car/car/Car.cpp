@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Car.h"
 
-
 using namespace std;
 
 CCar::CCar()
@@ -44,17 +43,9 @@ bool CCar::SetGear(int gear)
 {
 	if (!m_isTurnOn)
 	{
-		if (gear == 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return gear == 0 ? true : false;
 	}
-
-	if (IsValidGear(gear) && IsValidSpeed(static_cast<Gear>(gear), m_speed))
+	else if (IsValidGear(gear) && IsValidSpeed(static_cast<Gear>(gear), m_speed))
 	{
 		if (ChangeGear(gear))
 		{
@@ -137,14 +128,8 @@ bool CCar::ChangeGear(int gear)
 		}
 		break;
 	case 2:
-		m_currentGear = static_cast<Gear>(gear);
-		return true;
 	case 3:
-		m_currentGear = static_cast<Gear>(gear);
-		return true;
 	case 4:
-		m_currentGear = static_cast<Gear>(gear);
-		return true;
 	case 5:
 		m_currentGear = static_cast<Gear>(gear);
 		return true;
@@ -170,7 +155,7 @@ int CCar::GetCurrentSpeed() const
 	return m_speed;
 }
 
-std::string CCar::GetCurrentDirection()const
+string CCar::GetCurrentDirection()const
 {
 	string direction = "";
 	switch (m_direction)

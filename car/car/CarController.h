@@ -1,24 +1,31 @@
 #pragma once
-#include "Car.h"
+#include <boost/noncopyable.hpp>
 
-class Ccar;
+class CCar;
 
-class CCarController
+// Наследование от boost::noncopyable - явный способ запретить копирование и присваивание экземпляров класса
+class CCarController : boost::noncopyable
 {
 public:
-	CCarController();
-	~CCarController() = default;
+	CCarController(CCar & car, std::istream & input, std::ostream & output);
+	
 	bool HandleCommand();
+	// Избавляемся от предупреждения компилятора о том, что он не сможет сгенерировать оператор присваивания
+	//CCarController& operator=(const CCarController &) = delete;
+
 private:
-	bool Info(istream & args)const;
-	bool EngineOn(istream & args);
-	bool EngineOff(istream & args);
-	bool SetGear(istream & args);
-	bool SetSpeed(istream & args);
-	typedef std::map<std::string, function<bool(istream & args)>> ActionMap;
+	bool Info(std::istream & args);
+	bool EngineOn(std::istream  & args);
+	bool EngineOff(std::istream & args);
+	bool SetGear(std::istream & args);
+	bool SetSpeed(std::istream & args);
+
+	typedef std::map<std::string, std::function<bool(std::istream & args)>> ActionMap;
+
 	CCar & m_car;
-	istream & m_input;
-	ostream & m_output;
+	std::istream & m_input;
+	std::ostream & m_output;
+
 	const ActionMap m_actionMap;
 };
 
