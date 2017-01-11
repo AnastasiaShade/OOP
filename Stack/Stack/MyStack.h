@@ -7,13 +7,13 @@ class CMyStack
 {
 	struct Stack
 	{
-		Stack(T const& value, Stack *next)
+		Stack(T const& value, std::shared_ptr<Stack> const& next)
 			: value(value)
 			, next(next)
 		{
 		}
 		T value;
-		Stack *next;
+		std::shared_ptr<Stack> next;
 	};
 public:
 	CMyStack()
@@ -22,15 +22,15 @@ public:
 	{
 	};
 
-	CMyStack(CMyStack &copiedStack)
+	CMyStack(CMyStack &copiedStack) // потенциальная утечка памяти
 	{
-		Stack *tmp = copiedStack.m_top;
-		Stack *currentTop = new Stack(tmp->value, nullptr);
+		std::shared_ptr<Stack> tmp = copiedStack.m_top;
+		std::shared_ptr<Stack> currentTop = std::make_shared<Stack>(tmp->value, nullptr);
 		m_top = currentTop;
 		tmp = tmp->next;
 		while (tmp != nullptr)
 		{
-			currentTop->next = new Stack(tmp->value, nullptr);
+			currentTop->next = std::make_shared<Stack>(tmp->value, nullptr);
 			currentTop = currentTop->next;
 			tmp = tmp->next;
 		}
@@ -54,8 +54,8 @@ public:
 
 	void Push(T const& element)
 	{
-		Stack *tmp = m_top;
-		m_top = new Stack(element, tmp);
+		std::shared_ptr<Stack> tmp = m_top;
+		m_top = std::make_shared<Stack>(element, tmp);
 		++m_size;
 	};
 
@@ -66,9 +66,8 @@ public:
 			throw std::logic_error("Stack is empty");
 		}
 
-		Stack *tmp = m_top;
+		std::shared_ptr<Stack> tmp = m_top;
 		m_top = m_top->next;
-		delete tmp;
 		--m_size;
 	};
 
@@ -100,17 +99,17 @@ public:
 		return m_size;
 	};
 
-	CMyStack& operator=(CMyStack && copiedStack)
+	CMyStack& operator=(CMyStack & copiedStack) // дублирование кода, потенциальная утечка памяти
 	{
 		if (std::addressof(copiedStack) != this)
 		{
-			Stack *tmp = copiedStack.m_top;
-			Stack *currentTop = new Stack(tmp->value, nullptr);
+			std::shared_ptr<Stack> tmp = copiedStack.m_top;
+			std::shared_ptr<Stack> currentTop = std::make_shared<Stack>(tmp->value, nullptr);
 			m_top = currentTop;
 			tmp = tmp->next;
 			while (tmp != nullptr)
 			{
-				currentTop->next = new Stack(tmp->value, nullptr);
+				currentTop->next = std::shared_ptr<Stack>(tmp->value, nullptr);
 				currentTop = currentTop->next;
 				tmp = tmp->next;
 			}
@@ -119,7 +118,7 @@ public:
 		return *this;
 	};
 
-	CMyStack& operator=(CMyStack & removedStack)
+	CMyStack& operator=(CMyStack && removedStack)
 	{
 		if (std::addressof(removedStack) != this)
 		{
@@ -132,7 +131,7 @@ public:
 	};
 
 private:
-	Stack *m_top;
+	std::shared_ptr<Stack> m_top;
 	size_t m_size;
 };
 
