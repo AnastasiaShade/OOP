@@ -5,15 +5,15 @@
 template <typename T>
 class CMyStack
 {
-	struct Stack
+	struct Node
 	{
-		Stack(T const& value, std::shared_ptr<Stack> const& next)
+		Node(T const& value, std::shared_ptr<Node> const& next)
 			: value(value)
 			, next(next)
 		{
 		}
 		T value;
-		std::shared_ptr<Stack> next;
+		std::shared_ptr<Node> next;
 	};
 public:
 	CMyStack()
@@ -22,15 +22,15 @@ public:
 	{
 	};
 
-	CMyStack(CMyStack &copiedStack) // потенциальная утечка памяти
+	CMyStack(CMyStack const& copiedStack) // потенциальная утечка памяти
 	{
-		std::shared_ptr<Stack> tmp = copiedStack.m_top;
-		std::shared_ptr<Stack> currentTop = std::make_shared<Stack>(tmp->value, nullptr);
+		std::shared_ptr<Node> tmp = copiedStack.m_top;
+		std::shared_ptr<Node> currentTop = std::make_shared<Node>(tmp->value, nullptr);
 		m_top = currentTop;
 		tmp = tmp->next;
 		while (tmp != nullptr)
 		{
-			currentTop->next = std::make_shared<Stack>(tmp->value, nullptr);
+			currentTop->next = std::make_shared<Node>(tmp->value, nullptr);
 			currentTop = currentTop->next;
 			tmp = tmp->next;
 		}
@@ -54,8 +54,8 @@ public:
 
 	void Push(T const& element)
 	{
-		std::shared_ptr<Stack> tmp = m_top;
-		m_top = std::make_shared<Stack>(element, tmp);
+		std::shared_ptr<Node> tmp = m_top;
+		m_top = std::make_shared<Node>(element, tmp);
 		++m_size;
 	};
 
@@ -66,7 +66,7 @@ public:
 			throw std::logic_error("Stack is empty");
 		}
 
-		std::shared_ptr<Stack> tmp = m_top;
+		std::shared_ptr<Node> tmp = m_top;
 		m_top = m_top->next;
 		--m_size;
 	};
@@ -103,13 +103,13 @@ public:
 	{
 		if (std::addressof(copiedStack) != this)
 		{
-			std::shared_ptr<Stack> tmp = copiedStack.m_top;
-			std::shared_ptr<Stack> currentTop = std::make_shared<Stack>(tmp->value, nullptr);
+			std::shared_ptr<Node> tmp = copiedStack.m_top;
+			std::shared_ptr<Node> currentTop = std::make_shared<Node>(tmp->value, nullptr);
 			m_top = currentTop;
 			tmp = tmp->next;
 			while (tmp != nullptr)
 			{
-				currentTop->next = std::shared_ptr<Stack>(tmp->value, nullptr);
+				currentTop->next = std::make_shared<Node>(tmp->value, nullptr);
 				currentTop = currentTop->next;
 				tmp = tmp->next;
 			}
@@ -131,7 +131,7 @@ public:
 	};
 
 private:
-	std::shared_ptr<Stack> m_top;
+	std::shared_ptr<Node> m_top;
 	size_t m_size;
 };
 
