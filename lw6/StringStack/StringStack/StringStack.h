@@ -5,15 +5,15 @@
 
 class CStringStack
 {
-	struct Stack
+	struct Node
 	{
-		Stack(std::string const& value, std::shared_ptr<Stack> const& next)
+		Node(std::string const& value, std::shared_ptr<Node> const& next)
 			: value(value)
 			, next(next)
 		{
 		}
 		std::string value;
-		std::shared_ptr<Stack> next;
+		std::shared_ptr<Node> next;
 	};
 
 public:
@@ -31,6 +31,6 @@ public:
 	CStringStack& operator=(CStringStack && removedStack);
 
 private:
-	std::shared_ptr<Stack> m_top;
+	std::shared_ptr<Node> m_top;
 	size_t m_size;
 };

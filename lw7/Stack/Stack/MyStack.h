@@ -24,17 +24,19 @@ public:
 
 	CMyStack(CMyStack const& copiedStack) // потенциальная утечка памяти
 	{
-		std::shared_ptr<Node> tmp = copiedStack.m_top;
-		std::shared_ptr<Node> currentTop = std::make_shared<Node>(tmp->value, nullptr);
-		m_top = currentTop;
-		tmp = tmp->next;
-		while (tmp != nullptr)
+		if (copiedStack.m_top != nullptr)
 		{
-			currentTop->next = std::make_shared<Node>(tmp->value, nullptr);
-			currentTop = currentTop->next;
-			tmp = tmp->next;
+			std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
+			std::shared_ptr<Node> stackTop;
+			while (temporaryStack != nullptr)
+			{
+				stackTop = std::make_shared<Node>(temporaryStack->value, nullptr);
+				stackTop = stackTop->next;
+				temporaryStack = temporaryStack->next;
+			}
 		}
-		m_size = copiedStack.GetSize();
+		m_top = copiedStack.m_top;
+		m_size = copiedStack.m_size;
 	};
 
 	CMyStack(CMyStack && removedStack)
@@ -103,17 +105,8 @@ public:
 	{
 		if (std::addressof(copiedStack) != this)
 		{
-			std::shared_ptr<Node> tmp = copiedStack.m_top;
-			std::shared_ptr<Node> currentTop = std::make_shared<Node>(tmp->value, nullptr);
-			m_top = currentTop;
-			tmp = tmp->next;
-			while (tmp != nullptr)
-			{
-				currentTop->next = std::make_shared<Node>(tmp->value, nullptr);
-				currentTop = currentTop->next;
-				tmp = tmp->next;
-			}
-			m_size = copiedStack.GetSize();
+			CMyStack<T> temporaryStack(copiedStack);
+			std::swap(*this, temporaryStack);
 		}
 		return *this;
 	};
@@ -134,4 +127,3 @@ private:
 	std::shared_ptr<Node> m_top;
 	size_t m_size;
 };
-

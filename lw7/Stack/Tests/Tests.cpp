@@ -31,6 +31,12 @@ BOOST_AUTO_TEST_CASE(can_add_element)
 	BOOST_CHECK_EQUAL(stack.GetTopElement(), 200);
 }
 
+BOOST_AUTO_TEST_CASE(can_be_constructed_from_empty_stack)
+{
+	CMyStack<int> otherStack(stack);
+	BOOST_CHECK_EQUAL(!stack.IsEmpty(), !otherStack.IsEmpty());
+}
+
 struct WithElements : StackOfInt
 {
 	WithElements()
@@ -99,15 +105,29 @@ BOOST_AUTO_TEST_CASE(can_be_assigned)
 	BOOST_CHECK_EQUAL(otherStack.GetTopElement(), stack.GetTopElement());
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_CASE(can_be_assigned_by_itself)
+{
+	CMyStack<int> otherStack = stack;
+	BOOST_CHECK_EQUAL(otherStack.GetSize(), stack.GetSize());
+	BOOST_CHECK_EQUAL(otherStack.GetTopElement(), stack.GetTopElement());
+}
+
+BOOST_AUTO_TEST_CASE(can_be_assigned_by_empty_stack)
+{
+	CMyStack<int> otherStack;
+	stack = otherStack;
+	BOOST_CHECK_EQUAL(otherStack.IsEmpty(), stack.IsEmpty());
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE_END()
 
 struct StackOfString
 {
 	CMyStack<std::string> stack;
 };
+
 BOOST_FIXTURE_TEST_SUITE(Stack_of_string, StackOfString)
 
 BOOST_AUTO_TEST_CASE(is_empty_by_default)
@@ -127,6 +147,12 @@ BOOST_AUTO_TEST_CASE(can_add_element)
 	BOOST_CHECK(!stack.IsEmpty());
 	BOOST_CHECK_EQUAL(stack.GetSize(), 1);
 	BOOST_CHECK_EQUAL(stack.GetTopElement(), "hello");
+}
+
+BOOST_AUTO_TEST_CASE(can_be_constructed_from_empty_stack)
+{
+	CMyStack<string> otherStack(stack);
+	BOOST_CHECK_EQUAL(!stack.IsEmpty(), !otherStack.IsEmpty());
 }
 
 struct WithElements : StackOfString
@@ -171,30 +197,44 @@ BOOST_AUTO_TEST_CASE(can_be_cleaned)
 
 BOOST_AUTO_TEST_CASE(can_be_constructed_from_other_stack)
 {
-	CMyStack<std::string> otherStack(stack);
+	CMyStack<string> otherStack(stack);
 	BOOST_CHECK_EQUAL(otherStack.GetSize(), stack.GetSize());
 	BOOST_CHECK_EQUAL(otherStack.GetTopElement(), stack.GetTopElement());
 }
 
-BOOST_AUTO_TEST_CASE(stack_is_independent_of_its_copies)
+BOOST_AUTO_TEST_CASE(is_independent_of_its_copies)
 {
-	CMyStack<std::string> stackCopy(stack);
+	CMyStack<string> stackCopy(stack);
 	stackCopy.Pop();
 	BOOST_CHECK_EQUAL((stack.GetSize() != stackCopy.GetSize()), true);;
 }
 
 BOOST_AUTO_TEST_CASE(can_be_moved)
 {
-	CMyStack<std::string> otherStack = std::move(stack);
+	CMyStack<string> otherStack = std::move(stack);
 	BOOST_CHECK(stack.IsEmpty());
 	BOOST_CHECK_EQUAL(otherStack.GetSize(), 5);
 }
 
 BOOST_AUTO_TEST_CASE(can_be_assigned)
 {
-	CMyStack<std::string> otherStack = stack;
+	CMyStack<string> otherStack = stack;
 	BOOST_CHECK_EQUAL(otherStack.GetSize(), stack.GetSize());
 	BOOST_CHECK_EQUAL(otherStack.GetTopElement(), stack.GetTopElement());
+}
+
+BOOST_AUTO_TEST_CASE(can_be_assigned_by_itself)
+{
+	CMyStack<string> otherStack = stack;
+	BOOST_CHECK_EQUAL(otherStack.GetSize(), stack.GetSize());
+	BOOST_CHECK_EQUAL(otherStack.GetTopElement(), stack.GetTopElement());
+}
+
+BOOST_AUTO_TEST_CASE(can_be_assigned_by_empty_stack)
+{
+	CMyStack<string> otherStack;
+	stack = otherStack;
+	BOOST_CHECK_EQUAL(otherStack.IsEmpty(), stack.IsEmpty());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
