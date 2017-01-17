@@ -61,32 +61,35 @@ bool CCar::SetSpeed(int speed)
 	{
 		return false;
 	}
-	if (m_currentGear == Gear::REAR)
+	if (speed >= 0 && speed <= INT_MAX)
 	{
-		if (IsValidSpeed(m_currentGear, speed))
+		if (m_currentGear == Gear::REAR)
 		{
-			m_speed = speed;
-			m_speed > 0 ? m_direction = Direction::BACKWARD : m_direction = Direction::STAY;
-			return true;
-		}
-	}
-	else if (m_currentGear == Gear::NEUTRAL)
-	{
-		if (speed < m_speed)
-		{
-			m_speed = speed;
-			if (m_speed == 0)
+			if (IsValidSpeed(m_currentGear, speed))
 			{
-				m_direction = Direction::STAY;
+				m_speed = speed;
+				m_speed > 0 ? m_direction = Direction::BACKWARD : m_direction = Direction::STAY;
+				return true;
 			}
+		}
+		else if (m_currentGear == Gear::NEUTRAL)
+		{
+			if (speed < m_speed)
+			{
+				m_speed = speed;
+				if (m_speed == 0)
+				{
+					m_direction = Direction::STAY;
+				}
+				return true;
+			}
+		}
+		else if (IsValidSpeed(m_currentGear, speed))
+		{
+			m_speed = speed;
+			m_direction = Direction::FORWARD;
 			return true;
 		}
-	}
-	else if (IsValidSpeed(m_currentGear, speed))
-	{
-		m_speed = speed;
-		m_direction = Direction::FORWARD;
-		return true;
 	}
 	return false;
 }
@@ -160,17 +163,17 @@ string CCar::GetCurrentDirection()const
 	string direction = "";
 	switch (m_direction)
 	{
-		case Direction::FORWARD:
-			direction = "forward";
-			break;
-		case Direction::BACKWARD:
-			direction = "backward";
-			break;
-		case Direction::STAY:
-			direction = "stay";
-			break;
-		default:
-			break;
+	case Direction::FORWARD:
+		direction = "forward";
+		break;
+	case Direction::BACKWARD:
+		direction = "backward";
+		break;
+	case Direction::STAY:
+		direction = "stay";
+		break;
+	default:
+		break;
 	}
 
 	return direction;

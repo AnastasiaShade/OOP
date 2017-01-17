@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8418794E-FBC5-44CB-90BC-A32A0E7FCA7F}</ProjectGuid>
+    <ProjectGuid>{30BF8C38-6E7C-4819-8C1E-7CB33859D2C3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>carTests</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -166,8 +166,8 @@
     <ClCompile Include="..\car\Car.cpp" />
     <ClCompile Include="..\car\CarController.cpp" />
     <ClCompile Include="CarControllerTests.cpp" />
-    <ClCompile Include="mainTest.cpp" />
-    <ClCompile Include="ProcessCarTest.cpp" />
+    <ClCompile Include="CarTests.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

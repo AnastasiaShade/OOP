@@ -58,8 +58,8 @@ bool CCarController::EngineOff(std::istream & /*args*/)
 bool CCarController::Info(std::istream & /*args*/)
 {
 	string info = (m_car.IsEngineOn())
-		? ("Engine is turned on\nDirection is: " + m_car.GetCurrentDirection() + "\nGear is: " + to_string(m_car.GetCurrentGear()) + 
-		"\nSpeed is: " + to_string(m_car.GetCurrentSpeed()) + "\n")
+		? ("Engine is turned on\nDirection is: " + m_car.GetCurrentDirection() + "\nGear is: " + to_string(m_car.GetCurrentGear()) +
+			"\nSpeed is: " + to_string(m_car.GetCurrentSpeed()) + "\n")
 		: "Engine is turned off\n";
 
 	m_output << info;

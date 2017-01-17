@@ -8,7 +8,7 @@ class CCarController : boost::noncopyable
 {
 public:
 	CCarController(CCar & car, std::istream & input, std::ostream & output);
-	
+
 	bool HandleCommand();
 	// Избавляемся от предупреждения компилятора о том, что он не сможет сгенерировать оператор присваивания
 	//CCarController& operator=(const CCarController &) = delete;

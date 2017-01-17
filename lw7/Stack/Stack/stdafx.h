@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
-
+#include <memory>
+#include <stdexcept>
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
