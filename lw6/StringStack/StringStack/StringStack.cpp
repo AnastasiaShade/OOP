@@ -18,10 +18,11 @@ CStringStack::CStringStack(CStringStack const& copiedStack)
 	if (copiedStack.m_top != nullptr)
 	{
 		std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
-		CStringStack stackTop;
+		std::shared_ptr<Node> stackTop;
 		while (temporaryStack != nullptr)
 		{
-			stackTop.Push(temporaryStack->value);
+			stackTop = std::make_shared<Node>(temporaryStack->value, nullptr);
+			stackTop = stackTop->next;
 			temporaryStack = temporaryStack->next;
 		}
 	}
