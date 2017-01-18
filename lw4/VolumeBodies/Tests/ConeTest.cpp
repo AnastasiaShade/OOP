@@ -10,7 +10,7 @@ struct Cone_
 	const double expectedRadius = 42.8;
 	const double expectedHeight = 124.0;
 	const double expectedDensity = 3.8;
-	const double expectedVolume = 237868.9969;
+	const double expectedVolume = pow(expectedRadius, 2) * M_PI * expectedHeight / 3;
 	const CCone cone;
 	Cone_()
 		: cone(expectedDensity, expectedRadius, expectedHeight)

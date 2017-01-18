@@ -7,7 +7,7 @@ struct Sphere_
 {
 	const double expectedRadius = 42.8;
 	const double expectedDensity = 8.8;
-	const double expectedVolume = 328412.68;
+	const double expectedVolume = pow(expectedRadius, 3) * M_PI * 4 / 3;
 	const CSphere sphere;
 	Sphere_()
 		: sphere(expectedDensity, expectedRadius)
@@ -17,7 +17,7 @@ BOOST_FIXTURE_TEST_SUITE(Sphere, Sphere_)
 
 BOOST_AUTO_TEST_CASE(is_a_body)
 {
-	BOOST_CHECK(static_cast<const CBody*>(&sphere));
+	BOOST_CHECK(static_cast<const CBody *>(&sphere));
 }
 
 BOOST_AUTO_TEST_CASE(has_a_radius)

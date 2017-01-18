@@ -175,7 +175,7 @@
     <ClCompile Include="..\VolumeBodies\Sphere.cpp" />
     <ClCompile Include="ConeTest.cpp" />
     <ClCompile Include="ControllerTest.cpp" />
-    <ClCompile Include="CylinderTestcpp.cpp" />
+    <ClCompile Include="CylinderTest.cpp" />
     <ClCompile Include="ParallelepipedTest.cpp" />
     <ClCompile Include="SphereTest.cpp" />
     <ClCompile Include="stdafx.cpp">

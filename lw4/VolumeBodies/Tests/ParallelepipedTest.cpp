@@ -11,7 +11,7 @@ struct Parallelepiped_
 	const double expectedHeight = 18.2;
 	const double expectedLength = 10;
 	const double expectedDensity = 8.8;
-	const double expectedVolume = 7789.6;
+	const double expectedVolume = expectedLength * expectedHeight * expectedWidth;
 	const CParallelepiped parallelepiped;
 	Parallelepiped_()
 		: parallelepiped(expectedDensity, expectedLength, expectedWidth, expectedHeight)
