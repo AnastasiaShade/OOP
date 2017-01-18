@@ -21,44 +21,41 @@ public:
 	{
 	};
 
-	CMyStack(CMyStack const& copiedStack) // потенциальная утечка памяти
+	CMyStack(CMyStack const& copiedStack)
 	{
 		if (copiedStack.m_top != nullptr)
 		{
 			std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
-			std::shared_ptr<Node> stackTop;
-			while (temporaryStack != nullptr)
+			m_top = std::make_shared<Node>(temporaryStack->value, nullptr);
+			std::shared_ptr<Node> stackTop = m_top;
+			while (temporaryStack->next != nullptr)
 			{
-				stackTop = std::make_shared<Node>(temporaryStack->value, nullptr);
+				stackTop->next = std::make_shared<Node>(temporaryStack->next->value, nullptr);
 				stackTop = stackTop->next;
 				temporaryStack = temporaryStack->next;
 			}
+			m_size = copiedStack.m_size;
 		}
-		m_top = copiedStack.m_top;
-		m_size = copiedStack.m_size;
-	};
+	}
 
 	CMyStack(CMyStack && removedStack)
-		: m_top(nullptr)
-		, m_size(0)
+		: m_top(removedStack.m_top)
+		, m_size(removedStack.m_size)
 	{
-		m_top = removedStack.m_top;
-		m_size = removedStack.m_size;
 		removedStack.m_top = nullptr;
 		removedStack.m_size = 0;
-	};
+	}
 
 	~CMyStack()
 	{
 		Clear();
-	};
+	}
 
 	void Push(T const& element)
 	{
-		std::shared_ptr<Node> tmp = m_top;
-		m_top = std::make_shared<Node>(element, tmp);
+		m_top = std::make_shared<Node>(element, m_top);
 		++m_size;
-	};
+	}
 
 	void Pop()
 	{
@@ -66,11 +63,9 @@ public:
 		{
 			throw std::logic_error("Stack is empty");
 		}
-
-		std::shared_ptr<Node> tmp = m_top;
 		m_top = m_top->next;
 		--m_size;
-	};
+	}
 
 	T GetTopElement()const
 	{
@@ -79,7 +74,7 @@ public:
 			throw std::logic_error("Stack is empty");
 		}
 		return m_top->value;
-	};
+	}
 
 
 	void Clear()
@@ -88,19 +83,19 @@ public:
 		{
 			Pop();
 		}
-	};
+	}
 
 	bool IsEmpty()const
 	{
 		return m_top == nullptr;
-	};
+	}
 
 	size_t GetSize()const
 	{
 		return m_size;
-	};
+	}
 
-	CMyStack& operator=(CMyStack & copiedStack) // дублирование кода, потенциальная утечка памяти
+	CMyStack& operator=(CMyStack const& copiedStack)
 	{
 		if (std::addressof(copiedStack) != this)
 		{
@@ -108,7 +103,7 @@ public:
 			std::swap(*this, temporaryStack);
 		}
 		return *this;
-	};
+	}
 
 	CMyStack& operator=(CMyStack && removedStack)
 	{
@@ -120,7 +115,7 @@ public:
 			removedStack.m_size = 0;
 		}
 		return *this;
-	};
+	}
 
 private:
 	std::shared_ptr<Node> m_top;

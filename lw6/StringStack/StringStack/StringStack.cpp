@@ -18,32 +18,29 @@ CStringStack::CStringStack(CStringStack const& copiedStack)
 	if (copiedStack.m_top != nullptr)
 	{
 		std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
-		std::shared_ptr<Node> stackTop;
-		while (temporaryStack != nullptr)
+		m_top = std::make_shared<Node>(temporaryStack->value, nullptr);
+		std::shared_ptr<Node> stackTop = m_top;
+		while (temporaryStack->next != nullptr)
 		{
-			stackTop = std::make_shared<Node>(temporaryStack->value, nullptr);
+			stackTop->next = std::make_shared<Node>(temporaryStack->next->value, nullptr);
 			stackTop = stackTop->next;
 			temporaryStack = temporaryStack->next;
 		}
+		m_size = copiedStack.m_size;
 	}
-	m_top = copiedStack.m_top;
-	m_size = copiedStack.m_size;
 }
 
 CStringStack::CStringStack(CStringStack && removedStack)
-	: m_top(nullptr)
-	, m_size(0)
+	: m_top(removedStack.m_top)
+	, m_size(removedStack.m_size)
 {
-	m_top = removedStack.m_top;
-	m_size = removedStack.m_size;
 	removedStack.m_top = nullptr;
 	removedStack.m_size = 0;
 }
 
 void CStringStack::Push(std::string const& element)
 {
-	std::shared_ptr<Node> tmp = m_top;
-	m_top = std::make_shared<Node>(element, tmp);
+	m_top = std::make_shared<Node>(element, m_top);
 	++m_size;
 }
 
@@ -53,8 +50,6 @@ void CStringStack::Pop()
 	{
 		throw std::logic_error("Stack is empty");
 	}
-
-	std::shared_ptr<Node> tmp = m_top;
 	m_top = m_top->next;
 	--m_size;
 }

@@ -206,7 +206,10 @@ BOOST_FIXTURE_TEST_SUITE(Stack_of_string, StackOfString)
 		{
 			CMyStack<string> stackCopy(stack);
 			stackCopy.Pop();
-			BOOST_CHECK_EQUAL((stack.GetSize() != stackCopy.GetSize()), true);;
+			stackCopy.Pop();
+			stackCopy.Push("kjhgfdsdfgh");
+			BOOST_CHECK_EQUAL((stack.GetSize() != stackCopy.GetSize()), true);
+			BOOST_CHECK_EQUAL((stack.GetTopElement() != stackCopy.GetTopElement()), true);
 		}
 
 		BOOST_AUTO_TEST_CASE(can_be_moved)
