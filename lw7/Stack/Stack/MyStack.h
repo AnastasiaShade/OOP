@@ -26,11 +26,10 @@ public:
 		if (copiedStack.m_top != nullptr)
 		{
 			std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
-			std::shared_ptr<Node> stackTop;
+			CMyStack stackTop;
 			while (temporaryStack != nullptr)
 			{
-				stackTop = std::make_shared<Node>(temporaryStack->value, nullptr);
-				stackTop = stackTop->next;
+				stackTop.Push(temporaryStack->value);
 				temporaryStack = temporaryStack->next;
 			}
 		}
