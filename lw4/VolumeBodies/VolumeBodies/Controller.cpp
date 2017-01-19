@@ -144,18 +144,18 @@ bool CController::CreateCylinder(istream &args)
 	return true;
 }
 
-void CController::PrintAllBodies(vector<shared_ptr<CBody>> const &bodies, ostream &output)
+void CController::PrintAllBodies(vector<shared_ptr<CBody>> const &bodies)
 {
 	if (!bodies.empty())
 	{
 		for (auto &body : bodies)
 		{
-			output << body->ToString();
+			m_output << body->ToString();
 		}
 	}
 	else
 	{
-		output << "You have not entered figures\n";
+		m_output << "You have not entered figures\n";
 	}
 }
 
@@ -175,13 +175,12 @@ void CController::FindBodyWithSmallestWeight(vector<shared_ptr<CBody>> const &bo
 {
 	if (!bodies.empty())
 	{
-		static const double WATER_DENSITY = 1000;
-		static const double GRAVITY_CONST = 9.8f;
-
 		auto IsWeightLess = [](shared_ptr<CBody> const &a, shared_ptr<CBody> const &b)
 		{
-			return ((a->GetDensity() - WATER_DENSITY) * GRAVITY_CONST * a->GetVolume()) >
-				((b->GetDensity() - WATER_DENSITY) * GRAVITY_CONST * b->GetVolume());
+			double waterDensity = 1000;
+			double gravityConst = 9.8;
+			return ((a->GetDensity() - waterDensity) * gravityConst * a->GetVolume()) >
+				((b->GetDensity() - waterDensity) * gravityConst * b->GetVolume());
 		};
 
 		cout << "Body with smallest weight is " << (*min_element(bodies.begin(), bodies.end(), IsWeightLess))->ToString();

@@ -17,7 +17,7 @@ int main()
 			cout << "Unknown command!" << endl;
 		}
 	}
-	controller.PrintAllBodies(bodies, cout);
+	controller.PrintAllBodies(bodies);
 	controller.FindBodyWithMaxMass(bodies);
 	controller.FindBodyWithSmallestWeight(bodies);
 }

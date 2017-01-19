@@ -15,7 +15,7 @@ public:
 	CController(std::vector<std::shared_ptr<CBody>> &bodies, std::istream &input, std::ostream &output);
 	bool HandleCommand();
 	bool Info();
-	void PrintAllBodies(std::vector<std::shared_ptr<CBody>> const &bodies, std::ostream &output);
+	void PrintAllBodies(std::vector<std::shared_ptr<CBody>> const &bodies);
 	void FindBodyWithMaxMass(std::vector<std::shared_ptr<CBody>> const &bodies);
 	void FindBodyWithSmallestWeight(std::vector<std::shared_ptr<CBody>> const &bodies);
 
