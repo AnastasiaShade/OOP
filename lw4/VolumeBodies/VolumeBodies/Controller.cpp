@@ -60,9 +60,9 @@ bool CController::CreateSphere(istream &args)
 		shared_ptr<CBody> sphere = make_shared<CSphere>(density, radius);
 		m_bodies.push_back(sphere);
 	}
-	catch (invalid_argument const &e)
+	catch (invalid_argument const &err)
 	{
-		m_output << e.what();
+		m_output << err.what();
 	}
 	
 	return true;
@@ -86,9 +86,9 @@ bool CController::CreateParallelepiped(istream &args)
 		shared_ptr<CBody> parallelepiped = make_shared<CParallelepiped>(width, height, depth, density);
 		m_bodies.push_back(parallelepiped);
 	}
-	catch (invalid_argument const &e)
+	catch (invalid_argument const &err)
 	{
-		m_output << e.what();
+		m_output << err.what();
 	}
 
 	return true;
@@ -111,9 +111,9 @@ bool CController::CreateCone(istream &args)
 		shared_ptr<CBody> cone = make_shared<CCone>(density, radius, height);
 		m_bodies.push_back(cone);
 	}
-	catch (invalid_argument const &e)
+	catch (invalid_argument const &err)
 	{
-		m_output << e.what();
+		m_output << err.what();
 	}
 
 	return true;
@@ -136,9 +136,9 @@ bool CController::CreateCylinder(istream &args)
 		shared_ptr<CBody> cylinder = make_shared<CCylinder>(density, radius, height);
 		m_bodies.push_back(cylinder);
 	}
-	catch (invalid_argument const &e)
+	catch (invalid_argument const &err)
 	{
-		m_output << e.what();
+		m_output << err.what();
 	}
 
 	return true;
