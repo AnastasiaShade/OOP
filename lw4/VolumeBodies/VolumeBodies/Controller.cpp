@@ -39,7 +39,7 @@ bool CController::Info()
 {
 	m_output << "available commands:\n"
 		<< "1) Sphere <density> <radius>\n"
-		<< "2) Parallelepiped <density> <width> <height> <depth>\n"
+		<< "2) Parallelepiped <density> <length> <width> <height>\n"
 		<< "3) Cone <density> <radius> <height>\n"
 		<< "4) Cylinder <density> <radius> <height>\n";
 	return true;
@@ -183,6 +183,6 @@ void CController::FindBodyWithSmallestWeight(vector<shared_ptr<CBody>> const &bo
 				((b->GetDensity() - waterDensity) * gravityConst * b->GetVolume());
 		};
 
-		cout << "Body with smallest weight is " << (*min_element(bodies.begin(), bodies.end(), IsWeightLess))->ToString();
+		cout << "Body with smallest weight in water is " << (*min_element(bodies.begin(), bodies.end(), IsWeightLess))->ToString();
 	}
 }
