@@ -72,10 +72,10 @@ bool CController::CreateParallelepiped(istream &args)
 {
 	double width;
 	double height;
-	double depth;
+	double length;
 	double density;
 
-	if (!(args >> width) || !(args >> height) || !(args >> depth) || !(args >> density))
+	if (!(args >> density) || !(args >> length) || !(args >> width) || !(args >> height))
 	{
 		m_output << "Invalid count of arguments\n"
 			<< "Usage: Parallelepiped <width> <height> <depth> <density>\n";
@@ -83,7 +83,7 @@ bool CController::CreateParallelepiped(istream &args)
 	}
 	try
 	{
-		shared_ptr<CBody> parallelepiped = make_shared<CParallelepiped>(width, height, depth, density);
+		shared_ptr<CBody> parallelepiped = make_shared<CParallelepiped>(density, length, width, height);
 		m_bodies.push_back(parallelepiped);
 	}
 	catch (invalid_argument const &err)
