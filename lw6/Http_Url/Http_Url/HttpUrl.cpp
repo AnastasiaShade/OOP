@@ -103,19 +103,11 @@ Protocol CHttpUrl::GetProtocol(std::string const& url)
 	std::transform(protocolName.begin(), protocolName.end(), protocolName.begin(), ::tolower);
 
 	Protocol protocol;
-	if (protocolName == "http")
-	{
-		protocol = HTTP;
-	}
-	else if (protocolName == "https")
-	{
-		protocol = HTTPS;
-	}
-	else
+	if (protocolName != "http" && protocolName != "https")
 	{
 		throw CUrlParsingError("Invalid url protocol");
 	}
-
+	protocol = (protocolName == "http") ? HTTP : HTTPS;
 	return protocol;
 }
 

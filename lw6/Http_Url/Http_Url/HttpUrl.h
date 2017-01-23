@@ -40,7 +40,7 @@ private:
 	void ParseUrl(std::string const& url);
 	static Protocol GetProtocol(std::string const& url);
 	static std::string GetDomain(std::string const& url);
-	unsigned short GetPort(std::string const& url);
+	static unsigned short GetPort(std::string const& url);
 	static std::string GetDocument(std::string const& url);
 };
 
