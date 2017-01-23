@@ -32,7 +32,7 @@ CStringStack::CStringStack(CStringStack const& copiedStack)
 			}
 			m_size = copiedStack.m_size;
 		}
-		catch (std::invalid_argument & err)
+		catch (std::invalid_argument const& err)
 		{
 			Clear();
 		}

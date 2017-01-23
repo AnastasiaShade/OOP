@@ -27,16 +27,23 @@ public:
 	{
 		if (copiedStack.m_top != nullptr)
 		{
-			std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
-			m_top = std::make_shared<Node>(temporaryStack->value, nullptr);
-			std::shared_ptr<Node> stackTop = m_top;
-			while (temporaryStack->next != nullptr)
+			try
 			{
-				stackTop->next = std::make_shared<Node>(temporaryStack->next->value, nullptr);
-				stackTop = stackTop->next;
-				temporaryStack = temporaryStack->next;
+				std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
+				m_top = std::make_shared<Node>(temporaryStack->value, nullptr);
+				std::shared_ptr<Node> stackTop = m_top;
+				while (temporaryStack->next != nullptr)
+				{
+					stackTop->next = std::make_shared<Node>(temporaryStack->next->value, nullptr);
+					stackTop = stackTop->next;
+					temporaryStack = temporaryStack->next;
+				}
+				m_size = copiedStack.m_size;
 			}
-			m_size = copiedStack.m_size;
+			catch (std::invalid_argument const& err)
+			{
+				Clear();
+			}
 		}
 	}
 
