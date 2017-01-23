@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include <memory>
 #include <string>
+#include <stdexcept>
 
 class CStringStack
 {
@@ -27,7 +28,7 @@ public:
 	void Clear();
 	bool IsEmpty()const;
 	size_t GetSize()const;
-	CStringStack& operator=(CStringStack & copiedStack);
+	CStringStack& operator=(CStringStack const& copiedStack);
 	CStringStack& operator=(CStringStack && removedStack);
 
 private:

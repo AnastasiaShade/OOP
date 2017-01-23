@@ -22,6 +22,8 @@ public:
 	};
 
 	CMyStack(CMyStack const& copiedStack)
+		: m_top(nullptr)
+		, m_size(0)
 	{
 		if (copiedStack.m_top != nullptr)
 		{

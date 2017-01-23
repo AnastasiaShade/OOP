@@ -38,7 +38,7 @@
     <ClCompile Include="Tests.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="..\StringStack\StringStack.cpp">
+    <ClCompile Include="..\..\..\..\..\..\Анастасия\Documents\Visual Studio 2015\Projects\StringStack\StringStack\StringStack.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>

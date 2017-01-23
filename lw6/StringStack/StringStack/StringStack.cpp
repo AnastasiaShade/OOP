@@ -14,19 +14,28 @@ CStringStack::~CStringStack()
 }
 
 CStringStack::CStringStack(CStringStack const& copiedStack)
+	: m_top(nullptr)
+	, m_size(0)
 {
 	if (copiedStack.m_top != nullptr)
 	{
-		std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
-		m_top = std::make_shared<Node>(temporaryStack->value, nullptr);
-		std::shared_ptr<Node> stackTop = m_top;
-		while (temporaryStack->next != nullptr)
+		try
 		{
-			stackTop->next = std::make_shared<Node>(temporaryStack->next->value, nullptr);
-			stackTop = stackTop->next;
-			temporaryStack = temporaryStack->next;
+			std::shared_ptr<Node> temporaryStack = copiedStack.m_top;
+			m_top = std::make_shared<Node>(temporaryStack->value, nullptr);
+			std::shared_ptr<Node> stackTop = m_top;
+			while (temporaryStack->next != nullptr)
+			{
+				stackTop->next = std::make_shared<Node>(temporaryStack->next->value, nullptr);
+				stackTop = stackTop->next;
+				temporaryStack = temporaryStack->next;
+			}
+			m_size = copiedStack.m_size;
 		}
-		m_size = copiedStack.m_size;
+		catch (std::invalid_argument & err)
+		{
+			Clear();
+		}
 	}
 }
 
@@ -81,7 +90,7 @@ size_t CStringStack::GetSize()const
 	return m_size;
 }
 
-CStringStack& CStringStack::operator=(CStringStack & copiedStack)
+CStringStack& CStringStack::operator=(CStringStack const& copiedStack)
 {
 	if (std::addressof(copiedStack) != this)
 	{
