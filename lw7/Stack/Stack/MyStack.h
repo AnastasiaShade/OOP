@@ -40,7 +40,7 @@ public:
 				}
 				m_size = copiedStack.m_size;
 			}
-			catch (std::invalid_argument const& err)
+			catch (std::exception const& err)
 			{
 				Clear();
 			}
