@@ -42,7 +42,11 @@ public:
 			}
 			catch (std::exception const& err)
 			{
-				Clear();
+				while (m_top != nullptr)
+				{
+					m_top = m_top->next;
+				}
+				throw
 			}
 		}
 	}

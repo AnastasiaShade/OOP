@@ -54,5 +54,6 @@ BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
 BOOST_AUTO_TEST_CASE(cant_have_negative_values)
 {
 	BOOST_REQUIRE_THROW(CSphere(-1, 1), std::invalid_argument);
+	BOOST_REQUIRE_THROW(CSphere(1, -1), std::invalid_argument);
 }
 BOOST_AUTO_TEST_SUITE_END()

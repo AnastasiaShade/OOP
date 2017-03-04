@@ -179,7 +179,7 @@ void CController::FindBodyWithSmallestWeight(vector<shared_ptr<CBody>> const &bo
 		{
 			double waterDensity = 1000;
 			double gravityConst = 9.8;
-			return ((a->GetDensity() - waterDensity) * gravityConst * a->GetVolume()) >
+			return ((a->GetDensity() - waterDensity) * gravityConst * a->GetVolume()) <
 				((b->GetDensity() - waterDensity) * gravityConst * b->GetVolume());
 		};
 

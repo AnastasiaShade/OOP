@@ -94,17 +94,18 @@ BOOST_AUTO_TEST_CASE(can_handle_parallelepiped)
 	BOOST_CHECK((*bodies.begin())->ToString() == expectedOutput);
 }
 
-BOOST_AUTO_TEST_CASE(can_handle_invalid_input)
+BOOST_AUTO_TEST_CASE(cant_handle_invalid_input)
 {
 	VerifyCommandHandling("Sphere 5", "Invalid count of arguments\nUsage: Sphere <density> <radius>\n");
 	BOOST_CHECK(bodies.empty());
 }
-BOOST_AUTO_TEST_CASE(can_handle_negative_density)
+
+BOOST_AUTO_TEST_CASE(cant_handle_negative_density)
 {
 	VerifyCommandHandling("Sphere -5 10", "Density should not be negative");
 	BOOST_CHECK(bodies.empty());
 }
-BOOST_AUTO_TEST_CASE(can_handle_negative_params)
+BOOST_AUTO_TEST_CASE(cant_handle_negative_params)
 {
 	VerifyCommandHandling("Sphere 5 -10", "Radius should not be negative");
 	BOOST_CHECK(bodies.empty());
