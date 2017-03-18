@@ -2,21 +2,21 @@
 #include "stdafx.h"
 #include <vector>
 
-template <typename T, typename Less>
-bool FindMax(std::vector<T> const& arr, T& maxValue, Less const& less)
+template <typename T, typename Less = std::less<T>>
+bool FindMax(std::vector<T> const& arr, T& maxValue, Less const& less = Less())
 {
 	if (arr.empty())
 	{
 		return false;
 	}
-	T max = arr.front();
+	auto max = arr.begin();
 	for (auto it = arr.begin() + 1; it != arr.end(); ++it)
 	{
-		if (less(max, *it))
+		if (less(*max, *it))
 		{
-			max = *it;
+			max = it;
 		}
 	}
-	maxValue = max;
+	maxValue = *max;
 	return true;
 }

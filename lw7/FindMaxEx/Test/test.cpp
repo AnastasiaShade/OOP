@@ -64,6 +64,13 @@ BOOST_FIXTURE_TEST_SUITE(FindMax_function, ArrOfAthletes)
 			AreEquals(heaviestAthlete, Petrov);
 		}
 
+		BOOST_AUTO_TEST_CASE(can_find_max_element_in_nonempty_vector_without_less_parameter)
+		{
+			int max;
+			BOOST_CHECK(FindMax({ -83, -19, -112, -1, -2 }, max));
+			BOOST_CHECK_EQUAL(max, -1);
+		}
+
 	BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()
