@@ -7,22 +7,23 @@ CHttpUrl::CHttpUrl(std::string const& url)
 	ParseUrl(url);
 }
 
-CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document,
-	Protocol protocol, unsigned short port)
-	: m_domain(GetDomain(domain))
-	, m_document(GetDocument(document))
+CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Protocol protocol, unsigned short port)
+	: m_domain(ParseDomain(domain))
+	, m_document(ParseDocument(document))
 	, m_protocol(protocol)
 {
-	if (port >= MIN_PORT && port <= MAX_PORT)
+
+	if (port < MIN_PORT || port > MAX_PORT)
 	{
-		m_port = port;
+		throw CUrlParsingError("Port should be from " + std::to_string(MIN_PORT) + " to " + std::to_string(MAX_PORT));
 	}
+	m_port = port;
 }
 
 CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Protocol protocol)
 	: m_protocol(protocol)
-	, m_domain(GetDomain(domain))
-	, m_document(GetDocument(document))
+	, m_domain(ParseDomain(domain))
+	, m_document(ParseDocument(document))
 {
 	m_port = (m_protocol == HTTP) ? DEFAULT_HTTP_PORT : DEFAULT_HTTPS_PORT;
 }
@@ -30,8 +31,8 @@ CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Proto
 CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document)
 	: m_protocol(HTTP)
 	, m_port(DEFAULT_HTTP_PORT)
-	, m_domain(GetDomain(domain))
-	, m_document(GetDocument(document))
+	, m_domain(ParseDomain(domain))
+	, m_document(ParseDocument(document))
 {
 }
 
@@ -64,15 +65,15 @@ std::string CHttpUrl::GetDocument()const
 void CHttpUrl::ParseUrl(std::string const& url)
 {
 	std::string urlCopy = url;
-	m_protocol = GetProtocol(urlCopy);
+	m_protocol = ParseProtocol(urlCopy);
 	size_t domainBegining = url.find("://") + 3;
 	urlCopy = urlCopy.substr(domainBegining);
-	m_domain = GetDomain(urlCopy);
+	m_domain = ParseDomain(urlCopy);
 	if (urlCopy.find(':') != std::string::npos)
 	{
 		size_t portBeginning = urlCopy.find(":") + 1;
 		urlCopy = urlCopy.substr(portBeginning);
-		m_port = GetPort(urlCopy);
+		m_port = ParsePort(urlCopy);
 	}
 	else
 	{
@@ -86,11 +87,11 @@ void CHttpUrl::ParseUrl(std::string const& url)
 	else
 	{
 		urlCopy = urlCopy.substr(documentBeginning);
-		m_document = GetDocument(urlCopy);
+		m_document = ParseDocument(urlCopy);
 	}
 }
 
-Protocol CHttpUrl::GetProtocol(std::string const& url)
+Protocol CHttpUrl::ParseProtocol(std::string const& url)
 {
 	size_t protocolEnd = url.find("://");
 
@@ -111,7 +112,7 @@ Protocol CHttpUrl::GetProtocol(std::string const& url)
 	return protocol;
 }
 
-std::string CHttpUrl::GetDomain(std::string const& url)
+std::string CHttpUrl::ParseDomain(std::string const& url)
 {
 	size_t domainEnd = url.find(":");
 
@@ -136,7 +137,7 @@ std::string CHttpUrl::GetDomain(std::string const& url)
 	return domain;
 }
 
-unsigned short CHttpUrl::GetPort(std::string const& url)
+unsigned short CHttpUrl::ParsePort(std::string const& url)
 {
 	unsigned short port;
 	size_t protocolEnd = url.find("/");
@@ -162,7 +163,7 @@ unsigned short CHttpUrl::GetPort(std::string const& url)
 	return port;
 }
 
-std::string CHttpUrl::GetDocument(std::string const& url)
+std::string CHttpUrl::ParseDocument(std::string const& url)
 {
 	std::string document = url;
 	if (document[0] != '/')

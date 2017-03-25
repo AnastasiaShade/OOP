@@ -16,14 +16,14 @@ int main()
 			std::cout << "Domain: " << httpUrl.GetDomain() << std::endl;
 			std::cout << "Port: " << std::to_string(httpUrl.GetPort()) << std::endl;
 			std::cout << "Document: " << httpUrl.GetDocument() << std::endl;
-			return 0;
 		}
 		catch (std::invalid_argument const& err)
 		{
 			std::cout << "Error: " << err.what() << std::endl;
-			return 1;
 		}
+		std::cout << std::endl;
 		std::cout << "Enter the url: ";
 	}
+	return 0;
 }
 

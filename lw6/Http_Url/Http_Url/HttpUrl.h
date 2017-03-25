@@ -2,13 +2,10 @@
 #include "stdafx.h"
 #include "UrlParsingError.h"
 
-namespace
-{
-	const unsigned short MIN_PORT = 1;
-	const unsigned short MAX_PORT = 65535;
-	const unsigned short DEFAULT_HTTP_PORT = 80;
-	const unsigned short DEFAULT_HTTPS_PORT = 443;
-}
+const unsigned short MIN_PORT = 1;
+const unsigned short MAX_PORT = 65535;
+const unsigned short DEFAULT_HTTP_PORT = 80;
+const unsigned short DEFAULT_HTTPS_PORT = 443;
 
 enum Protocol
 {
@@ -20,11 +17,10 @@ class CHttpUrl
 {
 public:
 	CHttpUrl(std::string const& url);
-	CHttpUrl(std::string const& domain, std::string const& document,
-		Protocol protocol, unsigned short port);
-	CHttpUrl(std::string const& domain, std::string const& document,
-		Protocol protocol);
-	CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document);
+	CHttpUrl(std::string const& domain, std::string const& document, Protocol protocol, unsigned short port);
+	CHttpUrl(std::string const& domain, std::string const& document, Protocol protocol);
+	CHttpUrl(std::string const& domain, std::string const& document);
+
 	std::string GetURL()const;
 	Protocol GetProtocol()const;
 	std::string GetDomain()const;
@@ -38,10 +34,10 @@ private:
 	std::string m_document;
 
 	void ParseUrl(std::string const& url);
-	static Protocol GetProtocol(std::string const& url);
-	static std::string GetDomain(std::string const& url);
-	static unsigned short GetPort(std::string const& url);
-	static std::string GetDocument(std::string const& url);
+	static Protocol ParseProtocol(std::string const& url);
+	static std::string ParseDomain(std::string const& url);
+	static unsigned short ParsePort(std::string const& url);
+	static std::string ParseDocument(std::string const& url);
 };
 
 std::string ProtocolToString(Protocol const& protocol);
