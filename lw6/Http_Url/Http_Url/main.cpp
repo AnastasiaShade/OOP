@@ -20,6 +20,7 @@ int main()
 		catch (std::invalid_argument const& err)
 		{
 			std::cout << "Error: " << err.what() << std::endl;
+			return 1;
 		}
 		std::cout << std::endl;
 		std::cout << "Enter the url: ";
